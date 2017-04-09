@@ -19,7 +19,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // set icon
         if let button = statusItem.button {
             //button.action = #selector(self.togglePopover)
-            //button.action = #selector(AppDelegate.)
             //button.action = Selector("togglePopover:")
             button.image = NSImage(named: "statusBarIcon")
         }else{
