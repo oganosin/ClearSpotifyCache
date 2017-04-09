@@ -17,14 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         // set icon
-        //if let button = statusItem.button {
+        if let button = statusItem.button {
             //button.action = #selector(self.togglePopover)
             //button.action = #selector(AppDelegate.)
             //button.action = Selector("togglePopover:")
-            //button.image = NSImage(named: "statusBarIcon")
-        //}else{
+            button.image = NSImage(named: "statusBarIcon")
+        }else{
             self.statusItem.title = "Clear Cach"
-        //}
+        }
         
         self.statusItem.highlightMode = true
         self.statusItem.menu = menu
