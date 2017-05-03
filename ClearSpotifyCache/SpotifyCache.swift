@@ -12,19 +12,63 @@ import Cocoa
 class SpotifyCache {
     
     func deleteAllCash(){
-        self.terminateSpotifyApp()
-        self.removeCashDir()
-        self.activateSpotifyApp()
+        if(self.terminateSpotifyApp() == false){
+            print("failed to terminate")
+            // wait 3 sec more
+            Thread.sleep(forTimeInterval: 3)
+        }
+        let _ = self.removeCashDir()
+        if(self.launchSpotifyApp() == false){
+            print("failed to lauch Spotify")
+        }
     }
     
-    func terminateSpotifyApp(){
-        let appleScript = "if application \"Spotify\" is running\n"
-            + "tell application \"Spotify\" to quit\n"
-            + "repeat while application \"Spotify\" is running\n"
-            + "delay 0.1\n"
-            + "end repeat\n"
-            + "end if\n"
-        //let _ = NSAppleScript(source: appleScript)
+    func terminateSpotifyApp()->Bool{
+        // get running App lists
+        var Spotifies:[NSRunningApplication] = []
+        let apps = NSWorkspace.shared().runningApplications
+        for app in apps {
+            if(app.localizedName == "Spotify" ||
+                app.executableURL?.absoluteString == "file:///Applications/Spotify.app/Contents/MacOS/Spotify") {
+                print(app.processIdentifier)
+                print(app.executableURL!.absoluteString)
+                Spotifies.append(app)
+            }
+        }
+        
+        if(Spotifies.count == 1){
+            self.terminate()
+        }else{
+            for each in Spotifies {
+                each.terminate()
+            }
+        }
+        
+        var waiting = 0
+        while(self.isRunning()){
+            Thread.sleep(forTimeInterval: 0.1)
+            waiting += 1
+            if(waiting > 10) {
+                return false
+            }
+        }
+        return true
+    }
+
+    private func terminate(waitUntilTerminated:Bool = true) {
+        var appleScript:String = ""
+        if(waitUntilTerminated) {
+            appleScript = "if application \"Spotify\" is running\n"
+                + "tell application \"Spotify\" to quit\n"
+                + "repeat while application \"Spotify\" is running\n"
+                + "delay 0.1\n"
+                + "end repeat\n"
+                + "end if\n"
+        }else{
+            appleScript = "if application \"Spotify\" is running\n"
+                + "tell application \"Spotify\" to quit\n"
+                + "end if\n"
+        }
         var error: NSDictionary?
         if let scriptObject = NSAppleScript(source: appleScript) {
             scriptObject.executeAndReturnError(&error)
@@ -34,28 +78,76 @@ class SpotifyCache {
         }
     }
     
-    func activateSpotifyApp(){
+    func isRunning()->Bool{
+        let apps = NSWorkspace.shared().runningApplications
+        for app in apps {
+            if(app.localizedName == "Spotify" ||
+                app.executableURL?.absoluteString == "file:///Applications/Spotify.app/Contents/MacOS/Spotify") {
+                if (app.isTerminated){
+                    return false
+                }
+                return true
+            }
+        }
+        return false
+    }
+
+    func launchSpotifyApp()->Bool{
         let appleScript = "tell application \"Spotify\"\n"
             + "activate\n"
-            + "end tell"
+            + "end tell\n"
+            + "repeat\n"
+            + "tell application \"System Events\" to exists application process \"Spotify\"\n"
+            + "if result is true then exit repeat\n"
+            + "delay 0.1\n"
+            + "end repeat\n"
         var error: NSDictionary?
         if let scriptObject = NSAppleScript(source: appleScript) {
             scriptObject.executeAndReturnError(&error)
             if error != nil {
                 print(error.debugDescription)
+                return false
             }
         }
+        return true
     }
     
-    func removeCashDir(){
+    func removeCashDir()->Bool{
         let fileManager = FileManager.default
-        let target = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)[0] + "/Spotify/PersistentCache/"
-        if fileManager.fileExists(atPath: target){
-            do {
-                try fileManager.removeItem(atPath: target)
-            } catch let error as NSError{
-                print(error.description)
+        let root = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)[0]
+
+        var target:[String] = []
+        var isDir:ObjCBool = false
+        if fileManager.fileExists(atPath: root, isDirectory:&isDir) {
+            if isDir.boolValue {
+                do {
+                    let contents = try fileManager.contentsOfDirectory(atPath: root)
+                    for file in contents {
+                        if(file.isMatch("^Spotify")){
+                            // it's spotify Dir
+                            target.append(file)
+                        }
+                    }
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                    return false
+                }
+            }
+        }else{
+            return false
+        }
+        
+        for each in target {
+            let fullPath = root + "/" + each + "/" + "PersistentCache/"
+            if fileManager.fileExists(atPath: fullPath){
+                do {
+                    try fileManager.removeItem(atPath: fullPath)
+                } catch let error as NSError{
+                    print(error.description)
+                    return false
+                }
             }
         }
+        return true
     }
 }

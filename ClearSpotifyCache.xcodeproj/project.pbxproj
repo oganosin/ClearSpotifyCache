@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		4819F53E1E99C6C100B84861 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4819F53D1E99C6C100B84861 /* AppDelegate.swift */; };
-		4819F5401E99C6C100B84861 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4819F53F1E99C6C100B84861 /* ViewController.swift */; };
 		4819F5421E99C6C100B84861 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4819F5411E99C6C100B84861 /* Assets.xcassets */; };
 		4819F5451E99C6C100B84861 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4819F5431E99C6C100B84861 /* Main.storyboard */; };
 		4819F5501E99C6C100B84861 /* ClearSpotifyCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4819F54F1E99C6C100B84861 /* ClearSpotifyCacheTests.swift */; };
 		4819F55B1E99C78400B84861 /* SpotifyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4819F55A1E99C78400B84861 /* SpotifyCache.swift */; };
+		48292C041EA34EF4001CBE64 /* LoginItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48292C031EA34EF4001CBE64 /* LoginItem.swift */; };
+		48292C061EA3528F001CBE64 /* LoginItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48292C051EA3528F001CBE64 /* LoginItemTests.swift */; };
+		48292C071EA352C4001CBE64 /* LoginItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48292C031EA34EF4001CBE64 /* LoginItem.swift */; };
+		484523F21EB495BF00975499 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484523F11EB495BF00975499 /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +31,6 @@
 /* Begin PBXFileReference section */
 		4819F53A1E99C6C100B84861 /* ClearSpotifyCache.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClearSpotifyCache.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4819F53D1E99C6C100B84861 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4819F53F1E99C6C100B84861 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4819F5411E99C6C100B84861 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4819F5441E99C6C100B84861 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4819F5461E99C6C100B84861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -36,6 +38,9 @@
 		4819F54F1E99C6C100B84861 /* ClearSpotifyCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearSpotifyCacheTests.swift; sourceTree = "<group>"; };
 		4819F5511E99C6C100B84861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4819F55A1E99C78400B84861 /* SpotifyCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyCache.swift; sourceTree = "<group>"; };
+		48292C031EA34EF4001CBE64 /* LoginItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginItem.swift; sourceTree = "<group>"; };
+		48292C051EA3528F001CBE64 /* LoginItemTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginItemTests.swift; sourceTree = "<group>"; };
+		484523F11EB495BF00975499 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,11 +83,12 @@
 			isa = PBXGroup;
 			children = (
 				4819F53D1E99C6C100B84861 /* AppDelegate.swift */,
-				4819F53F1E99C6C100B84861 /* ViewController.swift */,
 				4819F5411E99C6C100B84861 /* Assets.xcassets */,
 				4819F5431E99C6C100B84861 /* Main.storyboard */,
 				4819F5461E99C6C100B84861 /* Info.plist */,
 				4819F55A1E99C78400B84861 /* SpotifyCache.swift */,
+				48292C031EA34EF4001CBE64 /* LoginItem.swift */,
+				484523F11EB495BF00975499 /* StringExtension.swift */,
 			);
 			path = ClearSpotifyCache;
 			sourceTree = "<group>";
@@ -92,6 +98,7 @@
 			children = (
 				4819F54F1E99C6C100B84861 /* ClearSpotifyCacheTests.swift */,
 				4819F5511E99C6C100B84861 /* Info.plist */,
+				48292C051EA3528F001CBE64 /* LoginItemTests.swift */,
 			);
 			path = ClearSpotifyCacheTests;
 			sourceTree = "<group>";
@@ -198,9 +205,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4819F5401E99C6C100B84861 /* ViewController.swift in Sources */,
+				484523F21EB495BF00975499 /* StringExtension.swift in Sources */,
 				4819F53E1E99C6C100B84861 /* AppDelegate.swift in Sources */,
 				4819F55B1E99C78400B84861 /* SpotifyCache.swift in Sources */,
+				48292C041EA34EF4001CBE64 /* LoginItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +216,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48292C061EA3528F001CBE64 /* LoginItemTests.swift in Sources */,
 				4819F5501E99C6C100B84861 /* ClearSpotifyCacheTests.swift in Sources */,
+				48292C071EA352C4001CBE64 /* LoginItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +409,7 @@
 				4819F5561E99C6C100B84861 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4819F5571E99C6C100B84861 /* Build configuration list for PBXNativeTarget "ClearSpotifyCacheTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +418,7 @@
 				4819F5591E99C6C100B84861 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

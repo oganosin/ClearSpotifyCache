@@ -2,5 +2,6 @@
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/default.*
+ClearSpotifyCache.pkg
 build
 .DS_Store

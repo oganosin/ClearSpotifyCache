@@ -13,8 +13,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var menu: NSMenu!
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+    let loginItemMenu = NSMenuItem()
+    var appname:String = "Clear Spotify Cache"
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // set appname
+        if let value = NSRunningApplication.current().localizedName {
+            self.appname = value
+        }
+        
         // Insert code here to initialize your application
         // set icon
         if let button = statusItem.button {
@@ -30,16 +37,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // create cach clear menu and add
         let actionItem = NSMenuItem()
-        actionItem.title = "Clear cache & launch"
+        actionItem.title = "Clear cache"
         actionItem.action = #selector(AppDelegate.clearCash(_:))
         menu.addItem(actionItem)
+
+        // create quit menu and add
+        let obj = LoginItem()
+        if( !obj.exist(name: self.appname) ) {
+            self.loginItemMenu.title = "Add login item"
+            self.loginItemMenu.action = #selector(AppDelegate.editLoginItem(_:))
+            menu.addItem(self.loginItemMenu)
+        }else{
+            //self.loginItemMenu.title = "Delete login item"
+        }
         
         // create quit menu and add
         let quitItem = NSMenuItem()
         quitItem.title = "Quit"
         quitItem.action = #selector(AppDelegate.quit(_:))
         menu.addItem(quitItem)
-
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -54,6 +70,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func clearCash(_ sender: Any){
         let obj = SpotifyCache()
         obj.deleteAllCash()
+    }
+    
+    func editLoginItem(_ sender: Any){
+        let obj = LoginItem()
+        if( obj.exist(name: self.appname) ) {
+            let _ = obj.delete(name: self.appname)
+            self.loginItemMenu.title = "Add login item"
+        }else{
+            let _ = obj.add(name: self.appname, path: Bundle.main.bundlePath)
+            //self.loginItemMenu.title = "Delete login item"
+            self.statusItem.menu?.removeItem(self.loginItemMenu)
+        }
     }
 
 }
